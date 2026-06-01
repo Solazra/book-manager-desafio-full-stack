@@ -15,13 +15,12 @@ Construir uma aplicação full-stack chamada Book Manager, onde o usuário poder
 As páginas internas devem ser protegidas por autenticação.
 
 ## Tecnologias Obrigatórias
-- Nest.js (backend)
-- Next.js (frontend)
+- Java + Spring Boot (backend)
+- Livre escolha (frontend)
 - TypeScript
 - Postgres ou MySQL
-- TailwindCSS
-
-## Requisitos do Backend (Nest.js)
+  
+## Requisitos do Backend
 
 ### Autenticação
 Implementar JWT com os endpoints:
@@ -49,11 +48,10 @@ Rota      | Descrição |
 
 ### Banco
 - Usar Postgres ou MySQL
-- A estrutura do banco deve estar versionada no repositório, podendo ser feita de uma das formas:
-  - Migrations (TypeORM ou Prisma)
-  - Ou um arquivo SQL com a criação das tabelas (ex: `schema.sql`)
+- A estrutura do banco deve estar versionada no repositório:
+  - Um arquivo SQL com a criação das tabelas (ex: `schema.sql`)
 
-## Requisitos do Frontend (Next.js + Tailwind)
+## Requisitos do Frontend
 
 Criar interface contendo:
 
@@ -67,7 +65,6 @@ Criar interface contendo:
 - Autenticação e armazenamento do token
 - Proteção das páginas internas
 - Formulários funcionais
-- Estilização com Tailwind
 - Busca de livros por título
 
 ## O que será avaliado
@@ -81,6 +78,7 @@ Criar interface contendo:
 - Dockerização do frontend e/ou backend
 - Deploy funcional da aplicação (com link)
 - Paginação no endpoint de listagem de livros
+- Documentação da API via Swagger/OpenAPI
   
 
 ```
