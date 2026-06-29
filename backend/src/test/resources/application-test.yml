@@ -1,0 +1,12 @@
+spring:
+  jpa:
+    show-sql: false
+
+jwt:
+  secret: test-secret-min-32-bytes-for-jwt-signing!!
+  expiration: 86400000
+
+logging:
+  level:
+    com.bookmanager: WARN
+    org.springframework.security: WARN

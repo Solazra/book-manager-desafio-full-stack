@@ -1,0 +1,89 @@
+<div class="auth-page auth-page--with-navbar">
+  <div class="auth-card form-card-wide">
+    <a routerLink="/books" class="back-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <polyline points="15 18 9 12 15 6" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Voltar para livros
+    </a>
+
+    <h1>{{ isEdit() ? 'Editar Livro' : 'Novo Livro' }}</h1>
+    <p class="subtitle">
+      {{ isEdit() ? 'Atualize os dados do livro' : 'Preencha os dados para cadastrar um livro' }}
+    </p>
+
+    @if (errorMsg()) {
+      <div class="alert alert-error" role="alert">{{ errorMsg() }}</div>
+    }
+
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <div class="field">
+        <label for="title">Título *</label>
+        <input
+          id="title"
+          type="text"
+          formControlName="title"
+          autocomplete="off"
+          placeholder="Título do livro"
+        />
+        @if (form.controls.title.touched && form.controls.title.hasError('required')) {
+          <span class="field-error">Título é obrigatório</span>
+        }
+      </div>
+
+      <div class="field">
+        <label for="author">Autor *</label>
+        <input
+          id="author"
+          type="text"
+          formControlName="author"
+          autocomplete="off"
+          placeholder="Nome do autor"
+        />
+        @if (form.controls.author.touched && form.controls.author.hasError('required')) {
+          <span class="field-error">Autor é obrigatório</span>
+        }
+      </div>
+
+      <div class="field">
+        <label for="year">Ano</label>
+        <input
+          id="year"
+          type="number"
+          formControlName="year"
+          min="1000"
+          max="2100"
+          placeholder="Ex: 2024"
+        />
+        @if (form.controls.year.touched && form.controls.year.hasError('min')) {
+          <span class="field-error">Ano deve ser no mínimo 1000</span>
+        }
+        @if (form.controls.year.touched && form.controls.year.hasError('max')) {
+          <span class="field-error">Ano deve ser no máximo 2100</span>
+        }
+      </div>
+
+      <div class="field">
+        <label for="description">Descrição</label>
+        <textarea
+          id="description"
+          formControlName="description"
+          rows="4"
+          placeholder="Sinopse ou notas sobre o livro (opcional)"
+        ></textarea>
+      </div>
+
+      <div class="form-actions">
+        <a routerLink="/books" class="btn-secondary">Cancelar</a>
+        <button type="submit" class="btn-primary" [disabled]="loading()">
+          @if (loading()) {
+            <span class="spinner" aria-hidden="true"></span>
+            Salvando...
+          } @else {
+            Salvar
+          }
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

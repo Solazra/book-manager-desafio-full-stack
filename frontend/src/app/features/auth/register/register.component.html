@@ -1,0 +1,124 @@
+<div class="auth-layout">
+  <aside class="auth-panel" aria-hidden="true">
+    <div class="auth-panel__glow"></div>
+    <div class="auth-panel__content">
+      <a routerLink="/login" class="auth-brand">
+        <svg class="auth-brand__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>Book Manager</span>
+      </a>
+
+      <h2 class="auth-panel__title">Comece sua coleção</h2>
+      <p class="auth-panel__text">Cadastre-se e comece a catalogar os livros que você ama.</p>
+
+      <div class="auth-panel__books">
+        <div class="auth-book auth-book--1"></div>
+        <div class="auth-book auth-book--2"></div>
+        <div class="auth-book auth-book--3"></div>
+      </div>
+    </div>
+  </aside>
+
+  <main class="auth-main">
+    <a routerLink="/login" class="auth-mobile-brand">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Book Manager
+    </a>
+
+    <div class="auth-card">
+      <div class="auth-card__header">
+        <h1>Criar conta</h1>
+        <p class="subtitle">Preencha os dados abaixo para começar</p>
+      </div>
+
+      @if (errorMsg()) {
+        <div class="alert alert-error" role="alert">{{ errorMsg() }}</div>
+      }
+
+      <form [formGroup]="form" (ngSubmit)="submit()">
+        <div class="field">
+          <label for="username">Nome de usuário</label>
+          <input
+            id="username"
+            type="text"
+            formControlName="username"
+            autocomplete="username"
+            placeholder="seu nome"
+          />
+          @if (form.controls.username.touched && form.controls.username.hasError('required')) {
+            <span class="field-error">Nome de usuário é obrigatório</span>
+          }
+        </div>
+
+        <div class="field">
+          <label for="email">E-mail</label>
+          <input
+            id="email"
+            type="email"
+            formControlName="email"
+            autocomplete="email"
+            placeholder="seu@email.com"
+          />
+          @if (form.controls.email.touched && form.controls.email.hasError('required')) {
+            <span class="field-error">E-mail é obrigatório</span>
+          }
+          @if (form.controls.email.touched && form.controls.email.hasError('email')) {
+            <span class="field-error">E-mail inválido</span>
+          }
+        </div>
+
+        <div class="field">
+          <label for="password">Senha</label>
+          <input
+            id="password"
+            type="password"
+            formControlName="password"
+            autocomplete="new-password"
+            placeholder="mínimo 6 caracteres"
+          />
+          @if (form.controls.password.touched && form.controls.password.hasError('required')) {
+            <span class="field-error">Senha é obrigatória</span>
+          }
+          @if (form.controls.password.touched && form.controls.password.hasError('minlength')) {
+            <span class="field-error">Senha deve ter no mínimo 6 caracteres</span>
+          }
+        </div>
+
+        <div class="field">
+          <label for="confirmPassword">Confirmar senha</label>
+          <input
+            id="confirmPassword"
+            type="password"
+            formControlName="confirmPassword"
+            autocomplete="new-password"
+            placeholder="repita a senha"
+          />
+          @if (form.controls.confirmPassword.touched && form.controls.confirmPassword.hasError('required')) {
+            <span class="field-error">Confirmação de senha é obrigatória</span>
+          }
+          @if (form.touched && form.hasError('passwordsMismatch')) {
+            <span class="field-error">As senhas não coincidem</span>
+          }
+        </div>
+
+        <button type="submit" class="btn-primary" [disabled]="loading()">
+          @if (loading()) {
+            <span class="spinner" aria-hidden="true"></span>
+            Cadastrando...
+          } @else {
+            Cadastrar
+          }
+        </button>
+      </form>
+
+      <p class="footer-link">
+        Já tem conta? <a routerLink="/login">Faça login</a>
+      </p>
+    </div>
+  </main>
+</div>

@@ -1,0 +1,142 @@
+<div class="book-page">
+  <header class="page-header">
+    <div class="page-header__text">
+      <h1>Meus Livros</h1>
+      <p class="subtitle">
+        @if (!loading()) {
+          {{ totalElements() }} {{ totalElements() === 1 ? 'livro' : 'livros' }} na sua coleção
+        } @else {
+          Carregando coleção...
+        }
+      </p>
+    </div>
+    <a routerLink="/books/new" class="btn-primary btn-primary--inline">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <line x1="12" y1="5" x2="12" y2="19" stroke-linecap="round"/>
+        <line x1="5" y1="12" x2="19" y2="12" stroke-linecap="round"/>
+      </svg>
+      Novo Livro
+    </a>
+  </header>
+
+  <div class="search-bar">
+    <svg class="search-bar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+      <circle cx="11" cy="11" r="8"/>
+      <line x1="21" y1="21" x2="16.65" y2="16.65" stroke-linecap="round"/>
+    </svg>
+    <input
+      id="search"
+      type="search"
+      [formControl]="searchControl"
+      placeholder="Buscar por título..."
+      autocomplete="off"
+      aria-label="Buscar por título"
+    />
+    @if (searchControl.value.trim()) {
+      <button
+        type="button"
+        class="search-bar__clear"
+        (click)="searchControl.setValue('')"
+        aria-label="Limpar busca"
+      >
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <line x1="18" y1="6" x2="6" y2="18" stroke-linecap="round"/>
+          <line x1="6" y1="6" x2="18" y2="18" stroke-linecap="round"/>
+        </svg>
+      </button>
+    }
+  </div>
+
+  @if (loading()) {
+    <div class="book-grid" role="status" aria-label="Carregando livros">
+      @for (i of skeletonItems; track i) {
+        <div class="book-card book-card--skeleton">
+          <div class="book-card__cover skeleton-block"></div>
+          <div class="book-card__body">
+            <div class="skeleton-block skeleton-block--title"></div>
+            <div class="skeleton-block skeleton-block--author"></div>
+            <div class="skeleton-block skeleton-block--desc"></div>
+            <div class="skeleton-block skeleton-block--desc skeleton-block--short"></div>
+          </div>
+        </div>
+      }
+    </div>
+  } @else if (books().length === 0) {
+    <div class="empty-state">
+      <div class="empty-state__icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      @if (searchControl.value.trim()) {
+        <h2>Nenhum livro encontrado</h2>
+        <p>Não há resultados para <strong>"{{ searchControl.value.trim() }}"</strong>. Tente outro título.</p>
+        <button type="button" class="btn-secondary" (click)="searchControl.setValue('')">Limpar busca</button>
+      } @else {
+        <h2>Sua estante está vazia</h2>
+        <p>Comece adicionando o primeiro livro da sua coleção.</p>
+        <a routerLink="/books/new" class="btn-primary btn-primary--inline">Adicionar primeiro livro</a>
+      }
+    </div>
+  } @else {
+    <div class="book-grid">
+      @for (book of books(); track book.id) {
+        <article class="book-card" [style.--cover-hue]="coverHue(book)">
+          <div class="book-card__cover">
+            <span class="book-card__year">{{ book.year ?? '—' }}</span>
+            <span class="book-card__spine"></span>
+          </div>
+          <div class="book-card__body">
+            <h2 class="book-card__title">{{ book.title }}</h2>
+            <p class="book-card__author">{{ book.author }}</p>
+            <p class="book-card__description">
+              {{ book.description || 'Sem descrição' }}
+            </p>
+            <div class="book-card__actions">
+              <a [routerLink]="['/books', book.id, 'edit']" class="btn-ghost">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Editar
+              </a>
+              <button type="button" class="btn-danger" (click)="remove(book)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <polyline points="3 6 5 6 21 6" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Excluir
+              </button>
+            </div>
+          </div>
+        </article>
+      }
+    </div>
+
+    @if (totalPages() > 1) {
+      <nav class="pagination" aria-label="Paginação">
+        <button type="button" class="btn-secondary" [disabled]="page() === 0" (click)="prevPage()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <polyline points="15 18 9 12 15 6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Anterior
+        </button>
+        <span class="page-info">
+          Página <strong>{{ page() + 1 }}</strong> de <strong>{{ totalPages() }}</strong>
+        </span>
+        <button type="button" class="btn-secondary" [disabled]="last()" (click)="nextPage()">
+          Próxima
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <polyline points="9 18 15 12 9 6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </nav>
+    }
+  }
+
+  <footer class="page-footer">
+    <p class="page-footer__brand">Book Manager</p>
+    <p class="page-footer__tagline">Sua biblioteca pessoal — organize, busque e redescubra suas leituras.</p>
+  </footer>
+</div>

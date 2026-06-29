@@ -1,0 +1,6 @@
+ALLOWED_ORIGINS: "http://localhost:4200"
+
+logging:
+  level:
+    com.bookmanager: DEBUG
+    org.springframework.security: DEBUG

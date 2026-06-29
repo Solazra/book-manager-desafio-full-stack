@@ -4,9 +4,11 @@ import com.bookmanager.domain.auth.dto.AuthResponse;
 import com.bookmanager.domain.auth.dto.LoginRequest;
 import com.bookmanager.domain.auth.dto.RegisterRequest;
 import com.bookmanager.domain.auth.dto.UserResponse;
+import com.bookmanager.domain.shared.exception.ErrorResponse;
 import com.bookmanager.domain.user.AuthService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirements;
@@ -31,8 +33,10 @@ public class AuthController {
     @Operation(summary = "Registrar novo usuário")
     @ApiResponses({
         @ApiResponse(responseCode = "201", description = "Usuário criado"),
-        @ApiResponse(responseCode = "400", description = "Payload inválido", content = @Content),
-        @ApiResponse(responseCode = "409", description = "E-mail já cadastrado", content = @Content)
+        @ApiResponse(responseCode = "400", description = "Payload inválido",
+            content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+        @ApiResponse(responseCode = "409", description = "E-mail já cadastrado",
+            content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     })
     @SecurityRequirements
     @PostMapping("/register")
@@ -43,8 +47,10 @@ public class AuthController {
     @Operation(summary = "Autenticar e obter token JWT")
     @ApiResponses({
         @ApiResponse(responseCode = "200", description = "Token gerado"),
-        @ApiResponse(responseCode = "400", description = "Payload inválido", content = @Content),
-        @ApiResponse(responseCode = "401", description = "Credenciais inválidas", content = @Content)
+        @ApiResponse(responseCode = "400", description = "Payload inválido",
+            content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+        @ApiResponse(responseCode = "401", description = "Credenciais inválidas",
+            content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     })
     @SecurityRequirements
     @PostMapping("/login")

@@ -1,0 +1,90 @@
+<div class="auth-layout">
+  <aside class="auth-panel" aria-hidden="true">
+    <div class="auth-panel__glow"></div>
+    <div class="auth-panel__content">
+      <a routerLink="/login" class="auth-brand">
+        <svg class="auth-brand__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>Book Manager</span>
+      </a>
+
+      <h2 class="auth-panel__title">Sua biblioteca pessoal</h2>
+      <p class="auth-panel__text">Organize, busque e redescubra suas leituras em um só lugar.</p>
+
+      <div class="auth-panel__books">
+        <div class="auth-book auth-book--1"></div>
+        <div class="auth-book auth-book--2"></div>
+        <div class="auth-book auth-book--3"></div>
+      </div>
+    </div>
+  </aside>
+
+  <main class="auth-main">
+    <a routerLink="/login" class="auth-mobile-brand">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Book Manager
+    </a>
+
+    <div class="auth-card">
+      <div class="auth-card__header">
+        <h1>Bem-vindo de volta</h1>
+        <p class="subtitle">Entre na sua conta para continuar</p>
+      </div>
+
+      @if (errorMsg()) {
+        <div class="alert alert-error" role="alert">{{ errorMsg() }}</div>
+      }
+
+      <form [formGroup]="form" (ngSubmit)="submit()">
+        <div class="field">
+          <label for="email">E-mail</label>
+          <input
+            id="email"
+            type="email"
+            formControlName="email"
+            autocomplete="email"
+            placeholder="seu@email.com"
+          />
+          @if (form.controls.email.touched && form.controls.email.hasError('required')) {
+            <span class="field-error">E-mail é obrigatório</span>
+          }
+          @if (form.controls.email.touched && form.controls.email.hasError('email')) {
+            <span class="field-error">E-mail inválido</span>
+          }
+        </div>
+
+        <div class="field">
+          <label for="password">Senha</label>
+          <input
+            id="password"
+            type="password"
+            formControlName="password"
+            autocomplete="current-password"
+            placeholder="••••••••"
+          />
+          @if (form.controls.password.touched && form.controls.password.hasError('required')) {
+            <span class="field-error">Senha é obrigatória</span>
+          }
+        </div>
+
+        <button type="submit" class="btn-primary" [disabled]="loading()">
+          @if (loading()) {
+            <span class="spinner" aria-hidden="true"></span>
+            Entrando...
+          } @else {
+            Entrar
+          }
+        </button>
+      </form>
+
+      <p class="footer-link">
+        Não tem conta? <a routerLink="/register">Crie uma agora</a>
+      </p>
+    </div>
+  </main>
+</div>

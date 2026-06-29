@@ -1,0 +1,22 @@
+@if (auth.isAuthenticated()) {
+  <nav class="navbar">
+    <a routerLink="/books" class="brand">
+      <svg class="brand__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span>Book Manager</span>
+    </a>
+    <div class="nav-actions">
+      <span class="user-email">{{ auth.currentEmail() }}</span>
+      <button type="button" class="btn-logout" (click)="auth.logout()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" stroke-linecap="round" stroke-linejoin="round"/>
+          <polyline points="16 17 21 12 16 7" stroke-linecap="round" stroke-linejoin="round"/>
+          <line x1="21" y1="12" x2="9" y2="12" stroke-linecap="round"/>
+        </svg>
+        Sair
+      </button>
+    </div>
+  </nav>
+}
