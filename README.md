@@ -1,7 +1,9 @@
 ### Para testar:
 
-Entre em https://frontend-production-b0be.up.railway.app/books com
+Entre aqui https://frontend-production-b0be.up.railway.app/books
+
 Login: demo@bookmanager.test
+
 Password: demotest
 
 
