@@ -5,8 +5,13 @@ https://frontend-production-b0be.up.railway.app/books
 Login: demo@bookmanager.test
 
 Password: demotest
-```
 
+```
+--------
+
+Swagger:
+
+https://book-manager-desafio-full-stack-production.up.railway.app/swagger-ui/index.html
 
 
 # 📘 Book Manager — Desafio Técnico Full-Stack
