@@ -1,3 +1,11 @@
+### Para testar:
+
+Entre em https://frontend-production-b0be.up.railway.app/books com
+Login: demo@bookmanager.test
+Password: demotest
+
+
+
 # 📘 Book Manager — Desafio Técnico Full-Stack
 
 O objetivo do desafio é criar uma aplicação simples para gerenciamento de livros com autenticação JWT e CRUD completo.
